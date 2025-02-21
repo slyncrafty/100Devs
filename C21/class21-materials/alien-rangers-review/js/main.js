@@ -12,9 +12,8 @@ for(let i = 0; i < 5; i++)
 }
 numArray.forEach(x => console.log( x ));
 //Return a new array of numbers that includes every even number from the previous Arrays
-const evenArray = [];
-numArray.forEach(x => x%2 === 0? evenArray.push(x) : null);
-evenArray.forEach(x => console.log(`evenArray: ${x}`));
+let evenArray = numArray => numArray.filter( x => x % 2 === 0 );
+console.log( `Even Array: ${ evenArray( numArray ) }` )
 
 //Create a function that takes in an array of numbers
 //Alert the sum of the second lowest and the second highest number
@@ -22,7 +21,7 @@ function sumOfSecondLowAndHigh(arr){
     arr = arr.sort((a, b) => a - b);
     let low = arr[1];
     let high = arr[arr.length - 2]
-    console.log( low, high, `sum: ${low + high}`);
+    console.log( `${ low } + ${ high }, sum: ${ low + high }` );
 }
 const arrr = [ 123, 23, 23, 434, 22, 1, 3 ]
-sumOfSecondLowAndHigh(arrr);
+sumOfSecondLowAndHigh( arrr ); 
