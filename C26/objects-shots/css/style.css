@@ -19,3 +19,40 @@ img{
 /******************************************
 /* ADDITIONAL STYLES
 /*******************************************/
+#drinks-list {
+  padding-left: 10px;
+}
+
+#drinks-list li {
+  display: inline-block;
+  padding: 2px;
+  margin: 1px 0;
+  list-style: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-radius: 4px;
+}
+
+#drinks-list li:hover {
+  background-color: bisque;
+}
+
+.carousel-item {
+  margin-top: 20px;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 10px; 
+  border-top: 1px;
+}
+
+.slide-image {
+  display: flex;
+  gap: 10px;
+}
+
+.carousel-thumb {
+  height: 100px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
