@@ -15,12 +15,21 @@ img{
   margin: 0 auto;
 }
 
+body {
+  margin-left: 20px;
+}
 
 /******************************************
 /* ADDITIONAL STYLES
 /*******************************************/
 #drinks-list {
+  padding-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   padding-left: 10px;
+  margin-top: 10px;
+  justify-content: center;
 }
 
 #drinks-list li {
@@ -38,21 +47,49 @@ img{
 }
 
 .carousel-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 20px;
-  overflow-x: auto;
-  white-space: nowrap;
-  padding: 10px; 
-  border-top: 1px;
+  padding-top: 50px;
+}
+
+.carousel-window {
+  width: 520px;
+  overflow: hidden;
+  padding : 10px;
+  border: 1px solid black;
 }
 
 .slide-image {
   display: flex;
-  gap: 10px;
+  transition: transform 0.3s ease;
 }
 
-.carousel-thumb {
-  height: 100px;
+.carousel-slide {
+  width: 120px;  
+  margin: 5px;
   border-radius: 8px;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.carousel-slide:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+.carousel-btn {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  font-size: 24px;
+  padding: 10px;
+  margin: 0;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.carousel-btn:hover {
+  background-color: #f0f0f0;
 }

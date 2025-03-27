@@ -2,16 +2,21 @@
 const input = document.querySelector('input');
 const drinksList = document.querySelector('#drinks-list');
 let cocktailName = '';
+let carouselIndex = 0;
 
 const carouselContainter = document.querySelector('.slide-image');
+const imgWidth = 120;
 
 document.querySelector('#get-cocktail').addEventListener('click', getInput);
 document.querySelector('#random').addEventListener('click', getRandom);
+document.querySelector('#carousel-left').addEventListener('click', () => slideCarousel(-1));
+document.querySelector('#carousel-right').addEventListener('click', () => slideCarousel(1));
 
 function getRandom(){
     carouselContainter.innerHTML = '';
-    const numSlides = 5;
-    let carouselIndex = 0;
+    const numSlides = 7;
+    let count = 0;
+    updateSlidePosition();
 
     for(let i = 0; i < numSlides; i++)
     {
@@ -23,15 +28,29 @@ function getRandom(){
                 const slide = document.createElement('img');
                 slide.src = drink.strDrinkThumb;
                 slide.title = drink.strDrink;
-                slide.classList.add('.carousel-slide');
+                slide.classList.add('carousel-slide');
 
                 slide.addEventListener('click', () => setDrinkDetails(drink));
                 carouselContainter.appendChild(slide);
+                count++;
             })
             .catch(err => `error : ${err}`);
     }
 }
 
+function slideCarousel(dir) {
+    const totalThumb = carouselContainter.children.length;
+    const visibleThumb = Math.floor(document.querySelector('.carousel-window').offsetWidth / imgWidth);
+    const maxIndex = Math.max(0, totalThumb - visibleThumb);
+    carouselIndex = Math.min(Math.max(carouselIndex + dir, 0), maxIndex);
+
+    updateSlidePosition();
+}
+
+function updateSlidePosition(){
+    const shiftWidth = carouselIndex * imgWidth;
+    carouselContainter.style.transform = `translateX(-${shiftWidth}px)`
+};
 
 function getInput(){
     cocktailName = input.value;
