@@ -57,7 +57,7 @@ function addLink() {
     let author = prompt("Enter the author name:");
     if(!author) reEnter();
 
-    links.push(new Link(title, url, prompt));
+    links.push(new Link(title, url, author));
     alert("Link added");
 }
 
