@@ -6,6 +6,24 @@
 // Home button to show list 
 // Hover over to highlight the card
 
+const fav = new Set();
+if(localStorage.getItem('fav')){
+  JSON.parse(localStorage.getItem('fav')).forEach(id => fav.add(id));
+}
+function saveFavorites(){
+  localStorage.setItem('fav', JSON.stringify(Array.from(fav)));
+}
+
+document.querySelector('#toggle-fav').addEventListener('click', showOnlyFav);
+
+async function showOnlyFav() {
+  const gallery = document.querySelector('.gallery');
+  gallery.innerHTML = '';
+  const sortedFav = Array.from(fav).sort((a,b) => a-b);
+  const cards = await Promise.all(sortedFav.map(id => fetchAndDisplay(id)));
+  cards.forEach(card=> gallery.appendChild(card))
+}
+
 document.querySelector('button').addEventListener('click', getFetch)
 
 document.querySelector('input').addEventListener('keydown', (e) => {
@@ -16,20 +34,27 @@ document.addEventListener('DOMContentLoaded', () => {
   loadInitialPokemon();
 });
 
-function loadInitialPokemon() {
-  for(let i = 0; i <= 10; i++)
+async function loadInitialPokemon() {
+  const promises = [];
+
+  for(let i = 1; i <= 20; i++)
   {
-    fetchAndDisplay(i);
+    //fetchAndDisplay(i);
+    promises.push(fetchAndDisplay(i));
   }
+  const results = await Promise.all(promises);
+  const gallery = document.querySelector('.gallery');
+  gallery.innerHTML = '';
+  results.forEach(card => gallery.appendChild(card));
 }
 
 function fetchAndDisplay(i) {
-  fetch(`https://pokeapi.co/api/v2/pokemon/${i}`)
-  .then(res => res.json())
-  .then(data => {
-    const poke = new CreatePokemon(data);
-    document.querySelector('.gallery').appendChild(poke.element);
-  });
+  return fetch(`https://pokeapi.co/api/v2/pokemon/${i}`)
+    .then(res => res.json())
+    .then(data => {
+      const poke = new CreatePokemon(data);
+      return poke.element;
+   });
 }
 
 // function createPokemonCard(data){
@@ -118,11 +143,11 @@ CreatePokemon.prototype.createCardElement = function () {
 					<div class="pokemon-detail">
 						<div>
 							<h4>Weight: </h4>
-							<span class="pokemon-weight">${this.weight}</span>
+							<span class="pokemon-weight">${this.weight}(kg)</span>
 						</div>
 						<div>
 							<h4>Height: </h4>
-							<span class="pokemon-height">${this.height}</span>
+							<span class="pokemon-height">${this.height}(m)</span>
 						</div>
 					</div>
 					<div class="pokemon-detail">
@@ -140,6 +165,25 @@ CreatePokemon.prototype.createCardElement = function () {
   card.querySelector('.pokemon-image').addEventListener('click', () =>{
     this.cries.play();
   })
+
+  const bookmark = card.querySelector('.bookmark');
+  if(fav.has(this.id)){
+    bookmark.classList.remove('fa-regular');
+    bookmark.classList.add('fa-solid');
+  }
+
+  bookmark.addEventListener('click', () => {
+    if(fav.has(this.id)){
+      fav.delete(this.id);
+      bookmark.classList.remove('fa-solid');
+      bookmark.classList.add('fa-regular');
+    } else{
+      fav.add(this.id);
+      bookmark.classList.remove('fa-regular');
+      bookmark.classList.add('fa-solid');
+    }
+    saveFavorites();
+  });
   return card;
 }
 

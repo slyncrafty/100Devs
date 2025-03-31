@@ -89,6 +89,16 @@ img{
 .pokemon-detail > div{
   display: flex;
 }
+
+
+.bookmark.fa-solid {
+  color: rgb(255, 79, 79);
+  cursor: pointer;
+}
+
+.bookmark.fa-regular {
+  cursor: pointer;
+}
 /******************************************
 /* ADDITIONAL STYLES
 /*******************************************/
