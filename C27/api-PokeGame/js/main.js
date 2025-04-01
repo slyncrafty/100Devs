@@ -1,11 +1,8 @@
 // Example fetch using pokemonapi.co
-// Fetch pokemon by their Name 
-// show name, sprite, evolution, type, 
-// Abilities, strong against
+// Fetch pokemon by their Name or ID# to display cards showing details
 // Bookmark your favorite pokemons
-// Home button to show list 
-// Hover over to highlight the card
 
+/* ========== Bookmark/Favorite ========== */
 const fav = new Set();
 if(localStorage.getItem('fav')){
   JSON.parse(localStorage.getItem('fav')).forEach(id => fav.add(id));
@@ -24,12 +21,14 @@ async function showOnlyFav() {
   cards.forEach(card=> gallery.appendChild(card))
 }
 
+/* ========== Fetch ========== */
 document.querySelector('button').addEventListener('click', getFetch)
 
 document.querySelector('input').addEventListener('keydown', (e) => {
   if(e.key === 'Enter') getFetch();
 });
 
+/* ========== Load initial Pokemon Cards ========== */
 document.addEventListener('DOMContentLoaded', () => {
   loadInitialPokemon();
 });
@@ -57,23 +56,7 @@ function fetchAndDisplay(i) {
    });
 }
 
-// function createPokemonCard(data){
-//   const card = document.createElement('div');
-//   card.classList.add('card');
-//   const types = data.types.join(' / ');
-
-//   card.innerHTML = `
-//     <h2>${(data.name)}</h2>
-//     <img src="${data.sprites.front_default}" alt="${data.name}">
-//     <p><strong>Type:</strong> ${types}</p>
-//     <p><strong>Height:</strong> ${data.height / 10} m</p>
-//     <p><strong>Weight:</strong> ${data.weight / 10} kg</p>
-//   `;
-
-//   return card;
-// }
-
-
+/* ========== Fetch and per user input ========== */
 function getFetch(){
   const choice = document.querySelector('input').value.toLowerCase();
   if(!choice) return;
@@ -92,6 +75,7 @@ function getFetch(){
       });
 }
 
+/* ========== Create Pokemon Object ========== */
 function CreatePokemon(data) {
   this.id = data.id;
   this.name = data.name;
@@ -105,25 +89,8 @@ function CreatePokemon(data) {
 
   this.element = this.createCardElement(); // <– DOM card
   this.init();
-
-  // this.setDetails = function () {
-  //   document.querySelector('.pokemon-id').textContent = "#" + this.id;
-  //   document.querySelector('.pokemon-name').textContent = this.name;
-  //   document.querySelector('.pokemon-image').src = this.image;
-  //   document.querySelector('.pokemon-type').textContent = this.types.join(' / ');
-  //   document.querySelector('.pokemon-weight').textContent = this.weight + "(Kg)";
-  //   document.querySelector('.pokemon-height').textContent = this.height + "(m)";
-  //   document.querySelector('.pokemon-strength').textContent = this.strength.join(' / ');
-  //   document.querySelector('.pokemon-weakness').textContent = this.weakness.join(' / ');
-  // }
-  
-  // this.playCries();
-  // this.calculateTypeDynamics();
 }
 
-// document.querySelector('.pokemon-image').addEventListener('click', (e) => {
-//   newPokemon.playCries();
-// })
 
 CreatePokemon.prototype.createCardElement = function () { 
   const card = document.createElement('div');
