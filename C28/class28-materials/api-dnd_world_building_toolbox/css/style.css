@@ -22,14 +22,25 @@
 body {
   font-size: 16px;
   padding: 2em 1em 5em;
+  max-width: 1000px;
+}
+
+input, select, button {
+  width: 100%;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  padding: 0.5em;
+  font-size: 1em;
 }
 
 img{
   display: block;
   max-width: 75%;
+  min-width: 200px;
   margin: 0 auto;
   padding: 30px;
 }
+
 
 .container{
   display: block;
@@ -42,13 +53,12 @@ img{
   margin: 20px 0;
   align-content: center;
 }
-
-label {
-  margin: 0 10px;
+.builder.name {
+  height: 10em;
 }
 
 #name-history {
-  width: 40%;
+  width: 45%;
   padding-left: 0.5rem;
   margin-left: 0.5rem;
   float: right;
@@ -76,22 +86,70 @@ label {
 }
 
 #build-character-btn {
-  background-color: #007baa;
+  background-color: var(--class-color-scheme);
   color: white;
   border: none;
   border-radius: 4px;
   padding: 8px;
   cursor: pointer;
 }
-
-.color-scheme{
-  color: var(--class-color-scheme);
-  border: 2px solid var(--class-color-scheme);
+.builder.color-list{
+  display: flex;
+  flex-wrap:wrap;
+  gap: 8px;
+  margin-top: 10px;
 }
 
+.color-scheme-row {
+  display: flex;
+  gap: 0.5em;
+  margin-top: 8px;
+}
+.color-scheme{
+  width: 10em;
+  height: 10em;
+  border-radius: 4px;
+}
+.color-scheme.prime{
+  background-color: var(--theme-primary);
+  border: 2px solid var(--theme-primary);
+}
+.color-scheme.second{
+  background-color: var(--theme-secondary);
+  border: 2px solid var(--theme-secondary);
+}
+.color-scheme.third{
+  background-color: var(--theme-accent);
+  border: 2px solid var(--theme-accent);
+}
+.color-scheme.forth{
+  background-color: var(--theme-highlight);
+  border: 2px solid var(--theme-highlight);
+}
+
+.builder.output {
+  margin-top: 1em;
+  padding: 1em;
+  background: var(--background-color);
+  border: 8px solid var(--theme-primary);
+  border-radius: 10px;
+  font-family: 'Georgia', serif;
+  line-height: 1.6;
+}
+#output>p {
+  font-size: 20px;
+}
 /******************************************
 /* ADDITIONAL STYLES
 /*******************************************/
 html {
   font-size: 16px;
+  font-family: 'Georgia', serif;
+}
+
+h4, label{
+  text-decoration: none;
+  font-size: 1em;
+  font-weight: 600;
+  margin: 0 10px;
 }

@@ -28,7 +28,7 @@
 					<select id="background-select"></select>
 				</label>
 			</div>
-			<div class="builder">
+			<div class="builder name">
 				<label>Name:
 					<input type="text" id="char-name">
 					<button id="generate-name-btn">Generate Name</button>
@@ -39,15 +39,29 @@
 				</aside>
 			</div>
 			<div class="builder">
-				<label>Color:<p class="color-scheme">color</p>
+				<label>Key phrase:
+					<select id="keyphrase-select">
+					</select>
 				</label>
 			</div>
-			<div class="builder">
-				<label>Backstory:
-				</label>
+			<div class="builder color-list">
+				<h4>Color Scheme: </h4>
+				<div class="color-scheme-row">
+					<div class="color-scheme prime"></div>
+					<div class="color-scheme second"></div>
+					<div class="color-scheme third"></div>
+					<div class="color-scheme forth"></div>
+				
+				</div>
 			</div>
 			<div class="builder">
 				<button id="build-character-btn">Build Character</button>
+			</div>
+			<div class="builder output">
+				<h4>Backstory:</h4>
+				<div id="output">
+					<span>Your backstory will appear here...</span>
+				</div>
 			</div>
 		</section>
 

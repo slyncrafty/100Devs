@@ -35,7 +35,7 @@ function getFetch(){
     fetch(apiurl)      
         .then(res => res.json()) // parse response as JSON
         .then(data => {
-        console.log(data.results)
+        // console.log(data.results)
         })
         .catch(err => {
             console.log(`error ${err}`)
@@ -51,6 +51,7 @@ function loadDropdownMenu(){
     getDropdownFetch('races', '#race-select');
     getDropdownFetch('classes', '#class-select');
     getDropdownFetch('backgrounds', '#background-select');
+    getDropdownFetchString('#keyphrase-select');
 }
 
 function getDropdownFetch(t, selector){
@@ -58,7 +59,7 @@ function getDropdownFetch(t, selector){
     fetch(url)    
         .then(res => res.json()) // parse response as JSON
         .then(data => {
-        console.log(data.results)
+        // console.log(data.results)
         const selectElem = document.querySelector(selector);
         populateDropdownMenu(data.results, selectElem); 
         })
@@ -81,36 +82,85 @@ function addDropdownMenu(elem, val) {
 }
 
 
+function getDropdownFetchString(selector){
+    fetch("https://www.dnd5eapi.co/api/2014/backgrounds/acolyte")
+        .then((res) => res.json())
+        .then((res) =>{
+            //   console.log(res);
+            const selectElem = document.querySelector(selector);
+            const types = res.personality_traits.from.options;
+            const strings = [];
+            for(let i = 0; i<types.length;i++) {
+                addDropdownMenu(selectElem, types[i].string)
+            }
+        })
+        .catch((error) => console.error(error));
+}
 
-
-const myHeaders = new Headers();
-myHeaders.append("Accept", "application/json");
-
-const requestOptions = {
-  method: "GET",
-  headers: myHeaders,
-  redirect: "follow"
-};
-
-
-fetch("https://www.dnd5eapi.co/api/2014/backgrounds/:index", requestOptions)
-  .then((response) => response.text())
-  .then((result) => console.log(result))
-  .catch((error) => console.error(error));
-
-
-  document.querySelector('#class-select').addEventListener('change', async (e) => {
+document.querySelector('#class-select').addEventListener('change', async (e) => {
     const selectedClass = e.target.value;
     const palette = await generateClassColorScheme(selectedClass);
     applyThemeColors(palette);
-  });
+});
 
-  function applyThemeColors(palette) {
+document.addEventListener('DOMContentLoaded', async () => {
+    const select = document.querySelector('#class-select');
+    const selectedClass = select.value;
+    const palette = await generateClassColorScheme(selectedClass);
+    applyThemeColors(palette);
+
+});
+  
+function applyThemeColors(palette) {
     if (!palette || palette.length < 4) return;
+    // console.log(`palette: ${palette}`);
+    document.documentElement.style.setProperty('--theme-primary', palette[0]);
+    document.documentElement.style.setProperty('--theme-secondary', palette[1]);
+    document.documentElement.style.setProperty('--theme-accent', palette[2]);
+    document.documentElement.style.setProperty('--theme-highlight', palette[3]);
+    //localStorage.setItem('classThemePalette', JSON.stringify(palette));
+} 
+
+
+// Generate backstory -- future idea using generative model to get creative backstory generation
+function generateStory(section){
+    document.getElementById("output").innerText = "Generating... please wait ⏳";
     
-    document.documentElement.style.setProperty('--class-color-scheme', palette[0]);
-    // document.documentElement.style.setProperty('--theme-primary', palette[0]);
-    // document.documentElement.style.setProperty('--theme-secondary', palette[1]);
-    // document.documentElement.style.setProperty('--theme-accent', palette[2]);
-    // document.documentElement.style.setProperty('--theme-highlight', palette[3]);
-  } 
+    const options = section.from.options;
+    const choose = section.choose || 1;
+
+    const shuffled = [...options].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, choose).map(opt => opt.string || opt.desc);
+}
+
+document.getElementById('build-character-btn').addEventListener('click', () => {
+    fetch('https://www.dnd5eapi.co/api/2014/backgrounds/acolyte')
+      .then(res => res.json())
+      .then(data => {
+        const name = document.getElementById("char-name").value;
+        const race = document.getElementById("race-select").value;
+        const charClass = document.getElementById("class-select").value;
+        const phrase = document.getElementById("keyphrase-select").value;
+        const ideals = generateStory(data.ideals);
+        const bonds = generateStory(data.bonds);
+        const flaws = generateStory(data.flaws);
+        const featureName = data.feature.name;
+        const featureDesc = data.feature.desc.join(' ');
+
+        const story = ` 
+        I am a ${race} ${charClass} named ${name}.
+        ${phrase}. My ideal is ${ideals.join(' / ').toLowerCase()}.
+        ${bonds.join(' / ')}
+        ${flaws.join(' / ')}
+        `;
+        const elem = document.querySelector('#output');
+        elem.innerHTML = '';
+        const descriptions = document.createElement('p');
+        descriptions.classList.add('storyItem');
+        descriptions.textContent = `${featureName}. ${featureDesc}.`;
+        const storyLine = document.createElement('p');
+        storyLine.classList.add('storyItem');
+        storyLine.textContent = story; 
+        elem.appendChild(descriptions);
+        elem.appendChild(storyLine);
+      });})
