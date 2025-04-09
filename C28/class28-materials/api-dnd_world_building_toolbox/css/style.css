@@ -23,6 +23,7 @@ body {
   font-size: 16px;
   padding: 2em 1em 5em;
   max-width: 1000px;
+  margin: 0 auto;
 }
 
 input, select, button {
@@ -54,14 +55,16 @@ img{
   align-content: center;
 }
 .builder.name {
-  height: 10em;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 1em;
 }
 
 #name-history {
-  width: 45%;
-  padding-left: 0.5rem;
-  margin-left: 0.5rem;
-  float: right;
+  flex: 1 1 100px; 
+  max-height: 10em;
+  padding-right: 0.5rem;
   box-shadow: inset 5px 0 5px -5px #29627e;
   color: #29627e;
   font-family: 'Georgia', serif;
@@ -105,9 +108,15 @@ img{
   gap: 0.5em;
   margin-top: 8px;
 }
+@media screen and (max-width: 600px) {
+  .color-scheme-row {
+    flex-wrap: wrap;
+    justify-content:space-between;
+  }
+}
 .color-scheme{
-  width: 10em;
-  height: 10em;
+  width: clamp(60px, 20vw, 100px);
+  height: clamp(60px, 20vw, 100px);
   border-radius: 4px;
 }
 .color-scheme.prime{
