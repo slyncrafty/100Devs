@@ -12,16 +12,48 @@
 		<link rel="stylesheet" href="css/style.css">
 	</head>
 	<body>
-
 		<h1>D&D World Building Toolbox</h1>
-		<input type="date" name="" value="">
-		<button type="button" name="button">Get Pokemon</button>
+		<img src="./img/dnd.jpg" alt="flying red dragon">
+		<section class="container">
+			<div class="builder">
+				<label>Race:
+					<select id="race-select"></select>
+				</label>
 
-		<h2>Name?</h2>
-		<img src="img/pokemon.jpeg" alt="">
-		<iframe src="" frameborder="0"></iframe>
-		<h3>Type?</h3>
+				<label>Class:
+					<select id="class-select"></select>
+				</label>
 
-		<script type="text/javascript" src="js/main.js"></script>
+				<label>Background:
+					<select id="background-select"></select>
+				</label>
+			</div>
+			<div class="builder">
+				<label>Name:
+					<input type="text" id="char-name">
+					<button id="generate-name-btn">Generate Name</button>
+				</label>
+				<aside id="name-history">
+					<h4>Generated Names:</h4>
+					<ul id="name-list"></ul>
+				</aside>
+			</div>
+			<div class="builder">
+				<label>Color:<p class="color-scheme">color</p>
+				</label>
+			</div>
+			<div class="builder">
+				<label>Backstory:
+				</label>
+			</div>
+			<div class="builder">
+				<button id="build-character-btn">Build Character</button>
+			</div>
+		</section>
+
+		<section id="built"></section>
+	
+
+		<script type="module" src="js/main.js"></script>
 	</body>
 </html>
