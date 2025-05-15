@@ -22,7 +22,7 @@ function getFetch(){
 
           pokeStore.push(data.types[0].type.name)
           pokeImg.push(data.sprites.front_shiny)
-      
+          
           if((pokeStore[0] === "grass" && pokeStore[1] === 'water')){
             document.querySelector('#pokeImg1').src = pokeImg[0]
             document.querySelector('#pokeImg2').src = pokeImg[1]
