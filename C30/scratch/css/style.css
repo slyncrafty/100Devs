@@ -1,0 +1,69 @@
+/******************************************
+/* CSS
+/*******************************************/
+
+/* Box Model Hack */
+*{
+  box-sizing: border-box;
+}
+
+/******************************************
+/* LAYOUT
+/*******************************************/
+img{
+  display: block;
+  margin: 0 auto;
+  width: 25%;
+}
+
+body {
+  background-color: lightgoldenrodyellow;
+  text-align: center;
+}
+
+.game-container {
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game {
+  height: 50vmin;
+  width: 50vmin;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1vmin;
+}
+
+.card {
+  height: 16vmin;
+  width: 16vmin;
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 0 1rem rgba(0,0,0,0.2);
+  color:blue;
+  font-size: 8vmin;
+}
+
+#reset {
+  padding: 1rem; 
+  font-size: 2rem;
+  border-radius: 1rem;
+  border: none;
+  background-color: lightblue;
+}
+
+#reset:hover {
+  background-color: rgb(114, 173, 224);
+}
+
+.card:hover {
+  background-color: rgb(114, 173, 224);
+}
+
+/******************************************
+/* ADDITIONAL STYLES
+/*******************************************/
