@@ -98,7 +98,7 @@
 //     .then(data => console.log(data))
 //     .then(houseThree)
 //     .then(data => console.log(data))
-//     .catch(err => console.log(err))
+// /     .catch(err => console.log(err))
 
 //Code 07
 // function houseOne(){
@@ -142,3 +142,62 @@
 // }
 // getACuteDogPhoto()
 
+const url = 'https://dog.ceo/api/breeds/image/random';
+
+async function getACuteDogPhoto() {
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        console.log(data);
+    } catch (err) { console.err(err)};
+}
+
+getACuteDogPhoto();
+
+
+// setTimeout() 
+function houseOne() {
+    console.log('Paper delivered to house 1');
+}
+
+function houseTwo() {
+    setTimeout(() => console.log('Paper delivered to house 2'), 0); // notice timeout set to '0' but still takes time to hand it off to WEB API -- event loop
+}
+
+function houseThree() {
+    console.log('Paper delivered to house 3');
+}
+houseOne();
+houseTwo();
+houseThree();
+
+// Some Data structures
+/* Queue
+** Like a real queue, the first element which was added to the list, will be the first element out. 
+** This is called a FIFO(first in first out) structure.
+*/
+
+let queue = [];
+queue.push(2) // [2]
+queue.push(5) // [2, 5]
+let i = queue.shift() // queue is now [5]
+alert(i) // displays 2
+
+/* Stack
+** The first pancake made, is the last pancake served.
+** This is called a stack
+** The fist element was added to the list, will be the last one out. 
+** This is called a LIFO(Last in First Out) structure.
+*/
+       
+
+// HTTP & FS
+const http = require('http');
+const fs = require('fs');
+http.createServer((req, res) => {
+    fs.readFile('demo.html', (err, data) => {
+    res.writeHead(200, {'Content-type' : 'text/html'})
+    res.write(data)
+    res.end()
+    })
+}).listen(8000);
