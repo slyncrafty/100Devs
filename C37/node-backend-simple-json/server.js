@@ -30,25 +30,18 @@ const server = http.createServer((req, res) => {
     });
   }
   else if (page == '/api') {
-    if('student' in params){
-      if(params['student']== 'leon'){
-        res.writeHead(200, {'Content-Type': 'application/json'});
-        const objToJson = {
-          name: "leon",
-          status: "Boss Man",
-          currentOccupation: "Baller"
-        }
-        res.end(JSON.stringify(objToJson));
-      }//student = leon
-      else if(params['student'] != 'leon'){
-        res.writeHead(200, {'Content-Type': 'application/json'});
-        const objToJson = {
-          name: "unknown",
-          status: "unknown",
-          currentOccupation: "unknown"
-        }
-        res.end(JSON.stringify(objToJson));
-      }//student != leon
+    if('game' in params){
+        if(params['game']== 'leon'){
+          res.writeHead(200, {'Content-Type': 'application/json'});
+          let flipResult = Math.ceil(Math.random() * 2) === 1 ? 'heads' : 'tails';
+          const objToJson = {
+            // name: "leon",
+            // status: "Boss Man",
+            // currentOccupation: "Baller",
+            flip: flipResult,
+          }
+          res.end(JSON.stringify(objToJson));
+        }//student = leon
     }//student if
   }//else if
   else if (page == '/css/style.css'){
