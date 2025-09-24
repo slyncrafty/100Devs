@@ -1,0 +1,42 @@
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.28.4/babel.js"></script>
+    <script type="text/babel">
+        const rootElement = ReactDOM.createRoot(document.getElementById('root'));
+        
+        const state = {eventCount: 0, username: 'hellothere'};
+
+        function App() {
+            function handleClick () { setState({eventCount: state.eventCount + 1}); };
+            function handleChange (e) { 
+                console.log(e);
+                setState({username: e.target.value}) 
+            };
+            return (
+                <div>
+                    <p>There have been {state.eventCount} events. </p>
+                    <p>
+                        <button onClick={handleClick}>Click Me</button>
+                    </p>
+                    <p>You typed: {state.username}</p>
+                    <p>
+                        <input onChange={handleChange} />
+                    </p>
+                </div>
+            )
+        }
+
+        function setState(newState) {
+            Object.assign(state, newState);
+            renderApp();
+        }
+
+        function renderApp() {
+            rootElement.render(<App />)   
+        }
+
+        renderApp();
+    </script>
+</body>

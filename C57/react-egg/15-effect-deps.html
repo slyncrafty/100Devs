@@ -1,0 +1,43 @@
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.28.4/babel.js"></script>
+    <script type="text/babel">
+        function Greeting() {
+            const [ name, setName ] = React.useState(
+                () => {
+                    return window.localStorage.getItem('name') || '';
+                },
+            );
+            React.useEffect(() => {
+                console.log('greeting useEffect');
+                window.localStorage.setItem('name', name);
+            }, [name]); //add a dependency array so it is updated only when the state it relies on changes
+
+            const handleChange = e => setName(e.target.value);
+            return (
+                <div>
+                    <form>
+                        <label htmlFor="name">Name: </label>
+                        <input value={name} onChange={handleChange} id="name" />
+                    </form>
+                    {name ? <strong>Hello {name}</strong> : "Please type your name"}
+                </div>
+            )
+        }
+
+        // everytime the button is clicked, 
+        function App() {
+            const [count, setCount] = React.useState(0);
+            return (
+                <>
+                    <button onClick={() => setCount(c => c + 1)}>{count}</button>
+                    <Greeting />
+                </>
+            )
+        }
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>

@@ -1,0 +1,59 @@
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.28.4/babel.js"></script>
+    <script type="text/babel">
+        function useLocalStorageState(key, defaultValue = '') {
+            const prevKeyRef = React.useRef(key);
+            const [ state, setState ] = React.useState(
+                () => {
+                    return window.localStorage.getItem(key || defaultValue);
+                },
+            );
+
+            React.useEffect(() => {
+                window.localStorage.setItem(key, state);
+            }, [key, state]); //add a dependency array so it is updated only when the state it relies on changes
+
+            React.useEffect(() => {
+                return () => {
+                    if (prevKeyRef.current !== key) {
+                        window.localStorage.removeItem(key);
+                    }
+                }
+            }, [key])
+
+            return [state, setState];
+        }
+
+        function Greeting() {
+            const [name, setName] = useLocalStorageState('name1');
+
+            const handleChange = e => setName(e.target.value);
+
+            return (
+                <div>
+                    <form>
+                        <label htmlFor="name">Name: </label>
+                        <input value={name} onChange={handleChange} id="name" />
+                    </form>
+                    {name ? <strong>Hello {name}</strong> : "Please type your name"}
+                </div>
+            )
+        }
+
+        // every time the button is clicked, 
+        function App() {
+            const [count, setCount] = React.useState(0);
+            return (
+                <>
+                    <button onClick={() => setCount(c => c + 1)}>{count}</button>
+                    <Greeting />
+                </>
+            )
+        }
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
