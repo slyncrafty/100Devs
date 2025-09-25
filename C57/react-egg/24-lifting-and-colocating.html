@@ -1,0 +1,52 @@
+<!-- Lifting and colocating React State -->
+<!-- Share state between two sibling components correctly -->
+<body>
+	<div id="root"></div>
+	<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+	<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/@babel/standalone@7.28.4/babel.js"></script>
+	<script type="text/babel">
+		function Name({ name, onNameChange }) {
+			return (
+				<div>
+					<label>Name: </label>
+					<input value={name} onChange={onNameChange} />
+				</div>
+			);
+		}
+
+		function FavoriteAnimal() {
+			const [animal, setAnimal] = React.useState(''); // colocating State
+			return (
+				<div>
+					<label>Favorite Animal: </label>
+					<input
+						value={animal}
+						onChange={(event) => setAnimal(event.target.value)}
+					/>
+				</div>
+			);
+		}
+
+		function Display({ name, animal }) {
+			return <div>{`Hey ${name}, you are awesome!`}</div>;
+		}
+
+		function App() {
+			const [name, setName] = React.useState(''); // Lifting State to the least common parent
+
+			return (
+				<div>
+					<Name
+						name={name}
+						onNameChange={(event) => setName(event.target.value)}
+					/>
+					<FavoriteAnimal />
+					<Display name={name} />
+				</div>
+			);
+		}
+		const root = ReactDOM.createRoot(document.getElementById('root'));
+		root.render(<App />);
+	</script>
+</body>
